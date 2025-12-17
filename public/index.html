@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Connect Platform | Launching Valentine's Day 2026</title>
+    <meta name="description" content="The AI-powered creative opportunity engine. Connect, create, and grow with the premier platform for designers.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-aqua: #00F5FF;
+            --neon-violet: #7B2CFF;
+            --midnight-black: #000000;
+            --graphite: #222222;
+            --white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, var(--neon-aqua) 0%, var(--neon-violet) 100%);
+            --glow-aqua: 0 0 30px rgba(0, 245, 255, 0.5);
+            --glow-violet: 0 0 30px rgba(123, 44, 255, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--midnight-black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none; z-index: 0;
+        }
+
+        .glow-orb {
+            position: fixed; width: 600px; height: 600px; border-radius: 50%;
+            filter: blur(120px); opacity: 0.15; pointer-events: none; z-index: 0;
+        }
+        .glow-orb.aqua { background: var(--neon-aqua); top: -200px; right: -200px; animation: float 8s ease-in-out infinite; }
+        .glow-orb.violet { background: var(--neon-violet); bottom: -200px; left: -200px; animation: float 8s ease-in-out infinite reverse; }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, 30px); } }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+        }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-text {
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem;
+            background: var(--gradient-primary); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--neon-aqua); }
+        .nav-cta {
+            padding: 12px 28px; background: var(--gradient-primary); border-radius: 30px;
+            font-weight: 600; font-size: 0.95rem; transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: var(--glow-aqua); }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 120px 5% 80px; position: relative; z-index: 1;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 20px; background: rgba(123, 44, 255, 0.2);
+            border: 1px solid rgba(123, 44, 255, 0.4); border-radius: 30px;
+            font-size: 0.9rem; margin-bottom: 30px; animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 800;
+            line-height: 1.1; margin-bottom: 24px; max-width: 900px;
+        }
+        .hero h1 span {
+            background: var(--gradient-primary); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem); color: rgba(255, 255, 255, 0.7);
+            max-width: 650px; margin-bottom: 50px;
+        }
+
+        /* Countdown Timer */
+        .countdown-container { margin-bottom: 50px; }
+        .countdown-label {
+            font-size: 1.1rem; color: var(--neon-aqua); margin-bottom: 20px;
+            font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .countdown { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 16px; padding: 25px 35px; min-width: 120px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .countdown-item:hover { transform: translateY(-5px); border-color: var(--neon-aqua); box-shadow: var(--glow-aqua); }
+        .countdown-number {
+            font-family: 'Montserrat', sans-serif; font-size: 3.5rem; font-weight: 800;
+            background: var(--gradient-primary); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;
+        }
+        .countdown-unit {
+            font-size: 0.85rem; color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase; letter-spacing: 2px; margin-top: 8px;
+        }
+
+        /* CTA Buttons */
+        .hero-ctas { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .btn {
+            padding: 16px 40px; border-radius: 30px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: all 0.3s ease; border: none;
+        }
+        .btn-primary { background: var(--gradient-primary); color: var(--midnight-black); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--glow-aqua); }
+        .btn-secondary { background: transparent; border: 2px solid var(--neon-aqua); color: var(--neon-aqua); }
+        .btn-secondary:hover { background: rgba(0, 245, 255, 0.1); transform: translateY(-3px); }
+
+        /* Features Section */
+        .features { padding: 100px 5%; position: relative; z-index: 1; }
+        .section-header { text-align: center; margin-bottom: 70px; }
+        .section-header h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 20px; }
+        .section-header p { color: rgba(255, 255, 255, 0.6); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px; max-width: 1400px; margin: 0 auto;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px; padding: 40px; transition: all 0.4s ease;
+        }
+        .feature-card:hover { transform: translateY(-10px); border-color: var(--neon-violet); background: rgba(123, 44, 255, 0.05); }
+        .feature-icon {
+            width: 70px; height: 70px; border-radius: 16px; background: var(--gradient-primary);
+            display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 25px;
+        }
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
+        .feature-card p { color: rgba(255, 255, 255, 0.6); line-height: 1.7; }
+
+        /* Content Kits Section */
+        .content-kits {
+            padding: 100px 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(123, 44, 255, 0.05) 50%, transparent 100%);
+            position: relative; z-index: 1;
+        }
+        .kits-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px; max-width: 1200px; margin: 0 auto;
+        }
+        .kit-card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; padding: 40px; position: relative; overflow: hidden; transition: all 0.4s ease;
+        }
+        .kit-card:hover { border-color: var(--neon-aqua); transform: translateY(-5px); }
+        .kit-card.featured { border-color: var(--neon-violet); }
+        .kit-badge {
+            position: absolute; top: 20px; right: 20px; padding: 6px 16px;
+            background: var(--neon-violet); border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+        }
+        .kit-card h3 { font-size: 1.6rem; margin-bottom: 10px; }
+        .kit-tagline { color: rgba(255, 255, 255, 0.6); margin-bottom: 25px; }
+        .kit-price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 25px; }
+        .kit-price .current {
+            font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--neon-aqua);
+        }
+        .kit-price .original { font-size: 1.2rem; color: rgba(255, 255, 255, 0.4); text-decoration: line-through; }
+        .kit-features { list-style: none; margin-bottom: 30px; }
+        .kit-features li {
+            padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; gap: 12px; color: rgba(255, 255, 255, 0.8);
+        }
+        .kit-features li::before { content: "✓"; color: var(--neon-aqua); font-weight: bold; }
+        .kit-btn {
+            width: 100%; padding: 16px; background: var(--gradient-primary); border: none;
+            border-radius: 12px; color: var(--midnight-black); font-weight: 700; font-size: 1rem;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .kit-btn:hover { transform: scale(1.02); box-shadow: var(--glow-aqua); }
+
+        /* Early Access Section */
+        .early-access { padding: 100px 5%; position: relative; z-index: 1; }
+        .early-access-box {
+            max-width: 700px; margin: 0 auto; text-align: center;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 32px; padding: 60px 40px;
+        }
+        .early-access-box h2 { font-size: 2.2rem; margin-bottom: 15px; }
+        .early-access-box p { color: rgba(255, 255, 255, 0.6); margin-bottom: 35px; }
+        .signup-form { display: flex; gap: 15px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+        .signup-form input {
+            flex: 1; min-width: 250px; padding: 16px 24px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: var(--white);
+            font-size: 1rem; outline: none; transition: border-color 0.3s ease;
+        }
+        .signup-form input:focus { border-color: var(--neon-aqua); }
+        .signup-form input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        .signup-form button {
+            padding: 16px 35px; background: var(--gradient-primary); border: none; border-radius: 12px;
+            color: var(--midnight-black); font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+        }
+        .signup-form button:hover { transform: scale(1.05); box-shadow: var(--glow-aqua); }
+
+        /* Footer */
+        footer { padding: 60px 5% 30px; border-top: 1px solid rgba(255, 255, 255, 0.05); position: relative; z-index: 1; }
+        .footer-content {
+            max-width: 1400px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 30px;
+        }
+        .footer-logo { display: flex; align-items: center; gap: 12px; }
+        .footer-links { display: flex; gap: 30px; list-style: none; }
+        .footer-links a { color: rgba(255, 255, 255, 0.6); transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--neon-aqua); }
+        .footer-social { display: flex; gap: 20px; }
+        .footer-social a {
+            width: 45px; height: 45px; border-radius: 50%; background: rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 1.2rem;
+        }
+        .footer-social a:hover { background: var(--neon-violet); transform: translateY(-3px); }
+        .footer-bottom {
+            text-align: center; padding-top: 40px; margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.4); font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .countdown-item { min-width: 80px; padding: 20px 25px; }
+            .countdown-number { font-size: 2.5rem; }
+            .hero-ctas { flex-direction: column; width: 100%; max-width: 300px; }
+            .btn { width: 100%; }
+            .kits-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow-orb aqua"></div>
+    <div class="glow-orb violet"></div>
+
+    <nav>
+        <div class="logo">
+            <span class="logo-text">⚔️ CREATIVE CONNECT</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#kits">Content Kits</a></li>
+            <li><a href="#early-access">Early Access</a></li>
+        </ul>
+        <a href="#early-access" class="nav-cta">Join Waitlist</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">💜 Launching Valentine's Day 2026</div>
+        <h1>Where <span>Creativity</span> Meets <span>Community</span></h1>
+        <p class="hero-subtitle">
+            The AI-powered creative opportunity engine. Connect with designers, 
+            unlock opportunities, and grow your creative career with the platform 
+            built for visionaries.
+        </p>
+
+        <div class="countdown-container">
+            <div class="countdown-label">🚀 Launching In</div>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">000</div>
+                    <div class="countdown-unit">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-unit">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-unit">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-unit">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-ctas">
+            <a href="#early-access" class="btn btn-primary">Get Early Access</a>
+            <a href="#kits" class="btn btn-secondary">View Content Kits</a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Built for Creative Visionaries</h2>
+            <p>Everything you need to connect, create, and grow in the digital creative landscape.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Dynamic Chat Ecosystem</h3>
+                <p>Real-time conversations with fellow designers. Get advice, share insights, and connect with peers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Advanced Media Sharing</h3>
+                <p>Showcase your portfolio in stunning HD. From sketches to final renders, every piece shines.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Designer Promotion Engine</h3>
+                <p>Transform passion into profession. Connect with clients and discover aligned opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Creative Assistant</h3>
+                <p>Your 24/7 creative co-pilot. Generate concepts and receive personalized suggestions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Smart Analytics</h3>
+                <p>Insights into your portfolio performance. Know what resonates with your audience.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Enterprise Security</h3>
+                <p>Your creative work protected with enterprise-grade encryption. Create with confidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-kits" id="kits">
+        <div class="section-header">
+            <h2>Creator Content Kits</h2>
+            <p>Professional templates, guides, and tools to accelerate your creative journey. Available now!</p>
+        </div>
+        <div class="kits-grid">
+            <div class="kit-card">
+                <h3>Creator Starter Kit</h3>
+                <p class="kit-tagline">Everything you need to launch your creative journey</p>
+                <div class="kit-price">
+                    <span class="current">$49</span>
+                    <span class="original">$79</span>
+                </div>
+                <ul class="kit-features">
+                    <li>50+ Social Media Templates</li>
+                    <li>Brand Color Palette Generator</li>
+                    <li>Content Calendar Template</li>
+                    <li>Basic Analytics Guide</li>
+                    <li>30-Day Content Challenge</li>
+                </ul>
+                <button class="kit-btn" onclick="purchaseKit('starter-kit')">Get Started</button>
+            </div>
+            <div class="kit-card featured">
+                <span class="kit-badge">BESTSELLER</span>
+                <h3>Pro Creator Kit</h3>
+                <p class="kit-tagline">Level up your content game with pro tools</p>
+                <div class="kit-price">
+                    <span class="current">$149</span>
+                    <span class="original">$249</span>
+                </div>
+                <ul class="kit-features">
+                    <li>200+ Premium Templates</li>
+                    <li>Video Thumbnail Pack</li>
+                    <li>Advanced Analytics Dashboard</li>
+                    <li>Collaboration Templates</li>
+                    <li>Monthly Strategy Calls</li>
+                </ul>
+                <button class="kit-btn" onclick="purchaseKit('pro-kit')">Get Pro Access</button>
+            </div>
+            <div class="kit-card">
+                <h3>Agency Power Kit</h3>
+                <p class="kit-tagline">Complete solution for agencies and teams</p>
+                <div class="kit-price">
+                    <span class="current">$499</span>
+                    <span class="original">$899</span>
+                </div>
+                <ul class="kit-features">
+                    <li>500+ Agency Templates</li>
+                    <li>Client Onboarding System</li>
+                    <li>White-Label Assets</li>
+                    <li>Team Training Videos</li>
+                    <li>1:1 Onboarding Call</li>
+                </ul>
+                <button class="kit-btn" onclick="purchaseKit('agency-kit')">Get Agency Access</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="early-access" id="early-access">
+        <div class="early-access-box">
+            <h2>Get Early Access</h2>
+            <p>Be among the first to experience Creative Connect. Join for exclusive early access and founding member benefits.</p>
+            <form class="signup-form" id="signup-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Join Waitlist</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">⚔️ CREATIVE CONNECT</span>
+            </div>
+            <ul class="footer-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#kits">Content Kits</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <div class="footer-social">
+                <a href="#">📷</a>
+                <a href="#">🐦</a>
+                <a href="#">💼</a>
+                <a href="#">🎵</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Creative Connect Platform. All rights reserved. | Launching Valentine's Day 2026 💜</p>
+        </div>
+    </footer>
+
+    <script>
+        function updateCountdown() {
+            const launchDate = new Date('February 14, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('days').textContent = String(days).padStart(3, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function purchaseKit(kitId) {
+            window.location.href = '/api/payments/create-checkout?productId=' + kitId + '&productType=one_time';
+        }
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert('Thanks for joining! We\'ll be in touch at ' + email + ' 💜');
+            this.reset();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
