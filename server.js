@@ -39,10 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ===========================================
 // DATABASE CONNECTION
 // ===========================================
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/creative-connect', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/creative-connect')
 .then(() => console.log('✅ MongoDB Connected - Creative Connect Platform'))
 .catch(err => console.error('❌ MongoDB Connection Error:', err));
 

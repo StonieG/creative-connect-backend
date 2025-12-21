@@ -113,8 +113,7 @@ const employeeSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Index for faster queries
-employeeSchema.index({ email: 1 });
+// Index for faster queries (email index already created by unique: true)
 employeeSchema.index({ role: 1, division: 1 });
 employeeSchema.index({ isActive: 1 });
 
