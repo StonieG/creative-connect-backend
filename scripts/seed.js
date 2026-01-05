@@ -25,7 +25,7 @@ const Employee = mongoose.model('Employee', employeeSchema);
 // Seed Data
 const seedEmployees = [
     {
-        email: 'ceo@creativeconnect.io',
+        email: 'ceo@creativeconnectplatform.com',
         password: 'CreativeConnect2026!',
         firstName: 'Founder',
         lastName: 'CEO',
@@ -35,7 +35,7 @@ const seedEmployees = [
         title: 'Chief Executive Officer'
     },
     {
-        email: 'admin@creativeconnect.io',
+        email: 'admin@creativeconnectplatform.com',
         password: 'Admin2026!',
         firstName: 'Platform',
         lastName: 'Admin',
@@ -45,7 +45,7 @@ const seedEmployees = [
         title: 'Platform Administrator'
     },
     {
-        email: 'coo@creativeconnect.io',
+        email: 'coo@creativeconnectplatform.com',
         password: 'Operations2026!',
         firstName: 'Operations',
         lastName: 'Manager',
@@ -55,7 +55,7 @@ const seedEmployees = [
         title: 'Chief Operating Officer'
     },
     {
-        email: 'cmo@creativeconnect.io',
+        email: 'cmo@creativeconnectplatform.com',
         password: 'Marketing2026!',
         firstName: 'Marketing',
         lastName: 'Lead',
@@ -65,7 +65,7 @@ const seedEmployees = [
         title: 'Chief Marketing Officer'
     },
     {
-        email: 'cto@creativeconnect.io',
+        email: 'cto@creativeconnectplatform.com',
         password: 'Technology2026!',
         firstName: 'Tech',
         lastName: 'Lead',
@@ -75,7 +75,7 @@ const seedEmployees = [
         title: 'Chief Technology Officer'
     },
     {
-        email: 'va@creativeconnect.io',
+        email: 'va@creativeconnectplatform.com',
         password: 'Assistant2026!',
         firstName: 'Virtual',
         lastName: 'Assistant',
