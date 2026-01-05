@@ -154,7 +154,9 @@ Required environment variables (see `.env.example`):
 - `JWT_SECRET` - JWT signing secret
 - `JWT_REFRESH_SECRET` - Refresh token secret
 - `STRIPE_SECRET_KEY` - Stripe API key
+- `STRIPE_PUBLISHABLE_KEY` - Stripe publishable key
 - `STRIPE_WEBHOOK_SECRET` - Stripe webhook secret
+- `OPENAI_API_KEY` - OpenAI API key (for AI features)
 - `FRONTEND_URL` - Frontend application URL
 - `ALLOWED_ORIGINS` - CORS allowed origins
 
@@ -195,7 +197,7 @@ Primary user model with fields:
 
 ## Additional Notes
 
-- Launch date: Valentine's Day 2026 (February 14, 2026)
-- Target: MVP for investor demo
+- **Platform Launch:** Valentine's Day 2026 (February 14, 2026)
+- **Current Milestone:** MVP for investor demo (January 2025)
 - License: Proprietary
 - Platform focus: Creative professionals, designers, content creators
