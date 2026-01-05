@@ -197,7 +197,7 @@ Primary user model with fields:
 
 ## Additional Notes
 
-- **Platform Launch:** Valentine's Day 2026 (February 14, 2026)
-- **Current Milestone:** MVP for investor demo (January 2025)
+- **Platform Launch Target:** Valentine's Day 2026 (February 14, 2026)
+- **Project Timeline:** As documented in README and server.js (MVP development phase)
 - License: Proprietary
 - Platform focus: Creative professionals, designers, content creators
