@@ -180,7 +180,7 @@ const LoginPage = ({ onLogin }) => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="you@creativeconnect.io"
+                            placeholder="you@creativeconnectplatform.com"
                             required
                             style={styles.input}
                         />
