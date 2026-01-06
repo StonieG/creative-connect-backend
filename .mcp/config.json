@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/runner/work/creative-connect-backend/creative-connect-backend"
+      ],
+      "description": "Provides read/write access to the Creative Connect backend codebase"
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "description": "Access to GitHub repository for Creative Connect"
+    },
+    "git": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-git",
+        "--repository",
+        "/home/runner/work/creative-connect-backend/creative-connect-backend"
+      ],
+      "description": "Git operations for version control"
+    }
+  },
+  "globalShortcut": "Ctrl+Space"
+}

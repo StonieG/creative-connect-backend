@@ -1,0 +1,251 @@
+{
+  "projectName": "Creative Connect Platform",
+  "projectType": "backend",
+  "version": "1.0.0-mvp",
+  "description": "AI-powered creative opportunity engine backend API",
+  "launchDate": "2026-02-14",
+  "framework": "Express.js",
+  "language": "JavaScript",
+  "nodeVersion": ">=18.0.0",
+  
+  "structure": {
+    "routes": {
+      "description": "API route handlers",
+      "files": {
+        "auth.js": "Authentication endpoints (login, register, JWT)",
+        "dashboard.js": "Employee dashboard API",
+        "payment.js": "Stripe integration for payments",
+        "va-system.js": "Virtual assistant management",
+        "content-kits.js": "Digital products store"
+      }
+    },
+    "models": {
+      "description": "Mongoose database models",
+      "files": {
+        "Employee.js": "Employee/User schema"
+      }
+    },
+    "middleware": {
+      "description": "Express middleware",
+      "files": {
+        "auth.js": "JWT verification & RBAC"
+      }
+    },
+    "scripts": {
+      "description": "Database seeding and utility scripts"
+    },
+    "public": {
+      "description": "Static files and landing page"
+    },
+    "frontend-components": {
+      "description": "Shared frontend component documentation"
+    }
+  },
+  
+  "dependencies": {
+    "runtime": [
+      "express",
+      "mongoose",
+      "bcryptjs",
+      "jsonwebtoken",
+      "cors",
+      "helmet",
+      "morgan",
+      "dotenv",
+      "stripe",
+      "express-validator",
+      "express-rate-limit",
+      "multer",
+      "nodemailer",
+      "uuid"
+    ],
+    "development": [
+      "nodemon",
+      "jest",
+      "eslint",
+      "supertest"
+    ]
+  },
+  
+  "scripts": {
+    "start": "Production server start",
+    "dev": "Development server with hot reload",
+    "test": "Run Jest tests",
+    "lint": "Run ESLint",
+    "seed": "Seed database with test data"
+  },
+  
+  "apiEndpoints": {
+    "auth": {
+      "prefix": "/api/auth",
+      "endpoints": [
+        "POST /register - Register new employee (Admin only)",
+        "POST /login - Employee login",
+        "POST /refresh-token - Refresh JWT",
+        "GET /me - Get current user",
+        "POST /change-password - Update password"
+      ]
+    },
+    "dashboard": {
+      "prefix": "/api/dashboard",
+      "endpoints": [
+        "GET /overview - Dashboard stats",
+        "GET /team - Team members list",
+        "PUT /employee/:id - Update employee",
+        "GET /division/:code - Division stats"
+      ]
+    },
+    "payments": {
+      "prefix": "/api/payments",
+      "endpoints": [
+        "GET /products - List all products",
+        "POST /create-checkout - Create checkout session",
+        "POST /webhook - Stripe webhook handler",
+        "GET /stats - Revenue statistics"
+      ]
+    },
+    "virtualAssistant": {
+      "prefix": "/api/va",
+      "endpoints": [
+        "GET /dashboard - VA task dashboard",
+        "POST /tasks - Create new task",
+        "GET /tasks - List all tasks",
+        "PATCH /tasks/:id - Update task status",
+        "POST /generate-daily - Generate daily tasks",
+        "GET /dm-scripts - Get DM templates"
+      ]
+    },
+    "contentKits": {
+      "prefix": "/api/content-kits",
+      "endpoints": [
+        "GET / - List all kits",
+        "GET /:id - Kit details",
+        "GET /download/:token - Verify download",
+        "GET /admin/analytics - Sales analytics"
+      ]
+    }
+  },
+  
+  "database": {
+    "type": "MongoDB",
+    "connectionString": "MONGODB_URI environment variable",
+    "defaultDatabase": "creative-connect"
+  },
+  
+  "authentication": {
+    "strategy": "JWT",
+    "tokenStorage": "Bearer token in Authorization header",
+    "refreshTokens": true,
+    "rbac": true
+  },
+  
+  "brandColors": {
+    "neonAqua": "#00F5FF",
+    "neonViolet": "#7B2CFF",
+    "midnightBlack": "#000000"
+  },
+  
+  "divisions": [
+    {
+      "name": "Operations",
+      "code": "COO",
+      "color": "#708090"
+    },
+    {
+      "name": "Marketing",
+      "code": "CMO",
+      "color": "#7B2CFF"
+    },
+    {
+      "name": "Technology",
+      "code": "CTO",
+      "color": "#0066FF"
+    },
+    {
+      "name": "Social Media",
+      "code": "SMD",
+      "color": "#00F5FF"
+    },
+    {
+      "name": "Creator Relations",
+      "code": "CCRO",
+      "color": "#FF6B6B"
+    }
+  ],
+  
+  "revenueStreams": {
+    "contentKits": {
+      "type": "one-time",
+      "products": [
+        {
+          "name": "Starter Kit",
+          "price": 49,
+          "contents": "50 templates, guides"
+        },
+        {
+          "name": "Pro Kit",
+          "price": 149,
+          "contents": "200 templates, tools"
+        },
+        {
+          "name": "Agency Kit",
+          "price": 499,
+          "contents": "500 templates, training"
+        }
+      ]
+    },
+    "subscriptions": {
+      "type": "monthly",
+      "plans": [
+        {
+          "name": "Basic Management",
+          "price": 99,
+          "features": "Calendar, basic analytics"
+        },
+        {
+          "name": "Pro Management",
+          "price": 299,
+          "features": "Full service, strategy calls"
+        },
+        {
+          "name": "Enterprise",
+          "price": 999,
+          "features": "Dedicated manager, 24/7"
+        }
+      ]
+    }
+  },
+  
+  "environment": {
+    "required": [
+      "NODE_ENV",
+      "PORT",
+      "MONGODB_URI",
+      "JWT_SECRET",
+      "JWT_REFRESH_SECRET",
+      "STRIPE_SECRET_KEY",
+      "STRIPE_PUBLISHABLE_KEY",
+      "FRONTEND_URL",
+      "ALLOWED_ORIGINS"
+    ],
+    "optional": [
+      "OPENAI_API_KEY"
+    ]
+  },
+  
+  "security": {
+    "notes": [
+      "Change all secrets in production",
+      "Use HTTPS in production",
+      "Enable rate limiting",
+      "Set up MongoDB authentication",
+      "Configure CORS properly"
+    ]
+  },
+  
+  "deployment": {
+    "platform": "Render.com",
+    "configFile": "render.yaml",
+    "healthCheck": "/api/health"
+  }
+}

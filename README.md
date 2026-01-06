@@ -3,6 +3,8 @@
 **The AI-powered creative opportunity engine**  
 *Launching Valentine's Day 2026* 💜
 
+> 🤖 **[Claude AI Integration Available](./CLAUDE_SETUP.md)** - This repository is configured for seamless Claude AI code assistance.
+
 ---
 
 ## 🚀 Quick Start

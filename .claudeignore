@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Uploads and temporary files
+uploads/*
+tmp/
+temp/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Git
+.git/
+.gitignore
+
+# Package manager
+yarn.lock
+pnpm-lock.yaml
+
+# Database dumps
+*.sql
+*.dump
+
+# Large media files
+*.mp4
+*.mov
+*.avi
+*.mp3
+*.wav
