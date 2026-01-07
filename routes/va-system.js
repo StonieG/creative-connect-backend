@@ -4,8 +4,29 @@
 
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const { authenticateToken, authorizeRoles, authorizePermissions } = require('../middleware/auth');
 const claudeService = require('../services/claude');
+
+// Rate limiter for AI endpoints (more restrictive due to API costs)
+const aiRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // Limit each IP to 20 requests per windowMs
+    message: {
+        success: false,
+        error: 'Too many AI requests from this IP, please try again later.'
+    },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Lighter rate limiter for status/info endpoints
+const statusRateLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 60, // Limit each IP to 60 requests per minute
+    standardHeaders: true,
+    legacyHeaders: false
+});
 
 // ===========================================
 // VA TASK CATEGORIES (From VA Guide)
@@ -580,7 +601,7 @@ router.post('/ai/brainstorm', authenticateToken, async (req, res) => {
 // ===========================================
 
 // Generate DM Scripts using Claude AI
-router.post('/ai/generate-dm-scripts', authenticateToken, async (req, res) => {
+router.post('/ai/generate-dm-scripts', aiRateLimiter, authenticateToken, async (req, res) => {
     try {
         if (!claudeService.isConfigured()) {
             return res.status(503).json({
@@ -627,7 +648,7 @@ router.post('/ai/generate-dm-scripts', authenticateToken, async (req, res) => {
 });
 
 // Generate Social Media Content using Claude AI
-router.post('/ai/generate-social-content', authenticateToken, async (req, res) => {
+router.post('/ai/generate-social-content', aiRateLimiter, authenticateToken, async (req, res) => {
     try {
         if (!claudeService.isConfigured()) {
             return res.status(503).json({
@@ -674,7 +695,7 @@ router.post('/ai/generate-social-content', authenticateToken, async (req, res) =
 });
 
 // Generate Task Description using Claude AI
-router.post('/ai/generate-task-description', authenticateToken, async (req, res) => {
+router.post('/ai/generate-task-description', aiRateLimiter, authenticateToken, async (req, res) => {
     try {
         if (!claudeService.isConfigured()) {
             return res.status(503).json({
@@ -725,7 +746,7 @@ router.post('/ai/generate-task-description', authenticateToken, async (req, res)
 });
 
 // Analyze Text using Claude AI
-router.post('/ai/analyze-text', authenticateToken, async (req, res) => {
+router.post('/ai/analyze-text', aiRateLimiter, authenticateToken, async (req, res) => {
     try {
         if (!claudeService.isConfigured()) {
             return res.status(503).json({
@@ -765,7 +786,7 @@ router.post('/ai/analyze-text', authenticateToken, async (req, res) => {
 });
 
 // Check Claude AI Service Status
-router.get('/ai/status', authenticateToken, async (req, res) => {
+router.get('/ai/status', statusRateLimiter, authenticateToken, async (req, res) => {
     try {
         const isConfigured = claudeService.isConfigured();
         
