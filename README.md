@@ -158,30 +158,18 @@ npm run seed
 
 ### 🤖 Claude AI Integration
 
-The platform integrates Claude AI for intelligent content generation:
+The platform integrates Claude AI for intelligent content generation. See **[CLAUDE_AI_GUIDE.md](./CLAUDE_AI_GUIDE.md)** for complete documentation.
 
-- **DM Scripts**: Generate personalized outreach messages
-- **Social Content**: Create engaging social media posts
-- **Task Descriptions**: Auto-generate detailed task instructions
-- **Text Analysis**: Analyze sentiment and extract insights
-
-**Setup:**
-1. Get an API key from [Anthropic](https://console.anthropic.com/)
+**Quick Start:**
+1. Get API key from [Anthropic Console](https://console.anthropic.com/)
 2. Add to `.env`: `ANTHROPIC_API_KEY=sk-ant-api-xxx`
-3. Optional: Set preferred model: `CLAUDE_MODEL=claude-3-5-sonnet-20241022`
+3. Restart server and test: `GET /api/va/ai/status`
 
-**Usage Example:**
-```bash
-curl -X POST http://localhost:5000/api/va/ai/generate-dm-scripts \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "targetAudience": "designers",
-    "purpose": "recruitment",
-    "platform": "Instagram",
-    "count": 3
-  }'
-```
+**Available Features:**
+- 🤖 DM Script Generation
+- 📱 Social Media Content Ideas
+- 📋 Task Description Generation
+- 📊 Text Sentiment Analysis
 
 ---
 
