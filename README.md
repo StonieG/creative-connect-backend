@@ -97,6 +97,11 @@ creative-connect-backend/
 | PATCH | `/api/va/tasks/:id` | Update task status |
 | POST | `/api/va/generate-daily` | Generate daily tasks |
 | GET | `/api/va/dm-scripts` | Get DM templates |
+| **POST** | **`/api/va/ai/generate-dm-scripts`** | **Generate DM scripts with Claude AI** |
+| **POST** | **`/api/va/ai/generate-social-content`** | **Generate social content with Claude AI** |
+| **POST** | **`/api/va/ai/generate-task-description`** | **Generate task descriptions with Claude AI** |
+| **POST** | **`/api/va/ai/analyze-text`** | **Analyze text with Claude AI** |
+| **GET** | **`/api/va/ai/status`** | **Check Claude AI service status** |
 
 ### Content Kits
 | Method | Endpoint | Description |
@@ -149,6 +154,33 @@ npm run lint
 
 # Seed database with test data
 npm run seed
+```
+
+### 🤖 Claude AI Integration
+
+The platform integrates Claude AI for intelligent content generation:
+
+- **DM Scripts**: Generate personalized outreach messages
+- **Social Content**: Create engaging social media posts
+- **Task Descriptions**: Auto-generate detailed task instructions
+- **Text Analysis**: Analyze sentiment and extract insights
+
+**Setup:**
+1. Get an API key from [Anthropic](https://console.anthropic.com/)
+2. Add to `.env`: `ANTHROPIC_API_KEY=sk-ant-api-xxx`
+3. Optional: Set preferred model: `CLAUDE_MODEL=claude-3-5-sonnet-20241022`
+
+**Usage Example:**
+```bash
+curl -X POST http://localhost:5000/api/va/ai/generate-dm-scripts \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "targetAudience": "designers",
+    "purpose": "recruitment",
+    "platform": "Instagram",
+    "count": 3
+  }'
 ```
 
 ---
