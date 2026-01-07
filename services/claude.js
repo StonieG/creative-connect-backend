@@ -102,10 +102,15 @@ Format as JSON array with this structure:
             temperature: 0.8
         });
 
-        // Parse JSON response
+        // Parse JSON response with error handling
         const jsonMatch = content.match(/\[[\s\S]*\]/);
         if (jsonMatch) {
-            return JSON.parse(jsonMatch[0]);
+            try {
+                return JSON.parse(jsonMatch[0]);
+            } catch (parseError) {
+                console.error('Failed to parse DM scripts JSON:', parseError);
+                // Fallback to basic structure
+            }
         }
 
         // Fallback if JSON parsing fails
@@ -170,10 +175,15 @@ Format as JSON array with this structure:
             temperature: 0.9
         });
 
-        // Parse JSON response
+        // Parse JSON response with error handling
         const jsonMatch = content.match(/\[[\s\S]*\]/);
         if (jsonMatch) {
-            return JSON.parse(jsonMatch[0]);
+            try {
+                return JSON.parse(jsonMatch[0]);
+            } catch (parseError) {
+                console.error('Failed to parse social content JSON:', parseError);
+                // Fallback to basic structure
+            }
         }
 
         // Fallback
@@ -265,10 +275,15 @@ Provide analysis in JSON format:
             temperature: 0.5
         });
 
-        // Parse JSON response
+        // Parse JSON response with error handling
         const jsonMatch = content.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
-            return JSON.parse(jsonMatch[0]);
+            try {
+                return JSON.parse(jsonMatch[0]);
+            } catch (parseError) {
+                console.error('Failed to parse text analysis JSON:', parseError);
+                // Fallback to basic structure
+            }
         }
 
         // Fallback
@@ -291,7 +306,8 @@ Provide analysis in JSON format:
  * @returns {boolean} True if API key is configured
  */
 function isConfigured() {
-    return !!process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'sk-ant-api-your-anthropic-api-key';
+    return !!process.env.ANTHROPIC_API_KEY && 
+           process.env.ANTHROPIC_API_KEY.startsWith('sk-ant-');
 }
 
 module.exports = {
