@@ -4,7 +4,29 @@
 
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('express-rate-limit');
 const { authenticateToken, authorizeRoles, authorizePermissions } = require('../middleware/auth');
+const claudeService = require('../services/claude');
+
+// Rate limiter for AI endpoints (more restrictive due to API costs)
+const aiRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // Limit each IP to 20 requests per windowMs
+    message: {
+        success: false,
+        error: 'Too many AI requests from this IP, please try again later.'
+    },
+    standardHeaders: true,
+    legacyHeaders: false
+});
+
+// Lighter rate limiter for status/info endpoints
+const statusRateLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 60, // Limit each IP to 60 requests per minute
+    standardHeaders: true,
+    legacyHeaders: false
+});
 
 // ===========================================
 // VA TASK CATEGORIES (From VA Guide)
@@ -571,6 +593,224 @@ router.post('/ai/brainstorm', authenticateToken, async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ success: false, error: 'Failed to brainstorm content' });
+    }
+});
+
+// ===========================================
+// CLAUDE AI-POWERED ENDPOINTS
+// ===========================================
+
+// Generate DM Scripts using Claude AI
+router.post('/ai/generate-dm-scripts', aiRateLimiter, authenticateToken, async (req, res) => {
+    try {
+        if (!claudeService.isConfigured()) {
+            return res.status(503).json({
+                success: false,
+                error: 'Claude AI service is not configured. Please set ANTHROPIC_API_KEY environment variable.'
+            });
+        }
+
+        const {
+            targetAudience = 'designers',
+            purpose = 'recruitment',
+            tone = 'professional and friendly',
+            platform = 'Instagram',
+            count = 3
+        } = req.body;
+
+        const scripts = await claudeService.generateDMScripts({
+            targetAudience,
+            purpose,
+            tone,
+            platform,
+            count
+        });
+
+        res.json({
+            success: true,
+            scripts,
+            metadata: {
+                targetAudience,
+                purpose,
+                platform,
+                generatedAt: new Date().toISOString()
+            }
+        });
+
+    } catch (error) {
+        console.error('Error generating DM scripts:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to generate DM scripts',
+            message: error.message
+        });
+    }
+});
+
+// Generate Social Media Content using Claude AI
+router.post('/ai/generate-social-content', aiRateLimiter, authenticateToken, async (req, res) => {
+    try {
+        if (!claudeService.isConfigured()) {
+            return res.status(503).json({
+                success: false,
+                error: 'Claude AI service is not configured. Please set ANTHROPIC_API_KEY environment variable.'
+            });
+        }
+
+        const {
+            platform = 'Instagram',
+            contentType = 'post',
+            topic = 'creative opportunities',
+            tone = 'inspiring',
+            count = 5
+        } = req.body;
+
+        const contentIdeas = await claudeService.generateSocialContent({
+            platform,
+            contentType,
+            topic,
+            tone,
+            count
+        });
+
+        res.json({
+            success: true,
+            contentIdeas,
+            metadata: {
+                platform,
+                contentType,
+                topic,
+                generatedAt: new Date().toISOString()
+            }
+        });
+
+    } catch (error) {
+        console.error('Error generating social content:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to generate social content',
+            message: error.message
+        });
+    }
+});
+
+// Generate Task Description using Claude AI
+router.post('/ai/generate-task-description', aiRateLimiter, authenticateToken, async (req, res) => {
+    try {
+        if (!claudeService.isConfigured()) {
+            return res.status(503).json({
+                success: false,
+                error: 'Claude AI service is not configured. Please set ANTHROPIC_API_KEY environment variable.'
+            });
+        }
+
+        const {
+            taskTitle,
+            category,
+            context = '',
+            detailLevel = 'detailed'
+        } = req.body;
+
+        if (!taskTitle) {
+            return res.status(400).json({
+                success: false,
+                error: 'taskTitle is required'
+            });
+        }
+
+        const description = await claudeService.generateTaskDescription({
+            taskTitle,
+            category,
+            context,
+            detailLevel
+        });
+
+        res.json({
+            success: true,
+            description,
+            metadata: {
+                taskTitle,
+                category,
+                generatedAt: new Date().toISOString()
+            }
+        });
+
+    } catch (error) {
+        console.error('Error generating task description:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to generate task description',
+            message: error.message
+        });
+    }
+});
+
+// Analyze Text using Claude AI
+router.post('/ai/analyze-text', aiRateLimiter, authenticateToken, async (req, res) => {
+    try {
+        if (!claudeService.isConfigured()) {
+            return res.status(503).json({
+                success: false,
+                error: 'Claude AI service is not configured. Please set ANTHROPIC_API_KEY environment variable.'
+            });
+        }
+
+        const { text } = req.body;
+
+        if (!text) {
+            return res.status(400).json({
+                success: false,
+                error: 'text is required'
+            });
+        }
+
+        const analysis = await claudeService.analyzeText(text);
+
+        res.json({
+            success: true,
+            analysis,
+            metadata: {
+                textLength: text.length,
+                analyzedAt: new Date().toISOString()
+            }
+        });
+
+    } catch (error) {
+        console.error('Error analyzing text:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to analyze text',
+            message: error.message
+        });
+    }
+});
+
+// Check Claude AI Service Status
+router.get('/ai/status', statusRateLimiter, authenticateToken, async (req, res) => {
+    try {
+        const isConfigured = claudeService.isConfigured();
+        
+        res.json({
+            success: true,
+            status: isConfigured ? 'operational' : 'not_configured',
+            isConfigured,
+            model: process.env.CLAUDE_MODEL || 'claude-3-5-sonnet-20241022',
+            features: {
+                dmScripts: isConfigured,
+                socialContent: isConfigured,
+                taskDescriptions: isConfigured,
+                textAnalysis: isConfigured
+            },
+            message: isConfigured 
+                ? 'Claude AI service is ready' 
+                : 'Claude AI service requires ANTHROPIC_API_KEY configuration'
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: 'Failed to check service status'
+        });
     }
 });
 

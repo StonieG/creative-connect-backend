@@ -97,6 +97,11 @@ creative-connect-backend/
 | PATCH | `/api/va/tasks/:id` | Update task status |
 | POST | `/api/va/generate-daily` | Generate daily tasks |
 | GET | `/api/va/dm-scripts` | Get DM templates |
+| **POST** | **`/api/va/ai/generate-dm-scripts`** | **Generate DM scripts with Claude AI** |
+| **POST** | **`/api/va/ai/generate-social-content`** | **Generate social content with Claude AI** |
+| **POST** | **`/api/va/ai/generate-task-description`** | **Generate task descriptions with Claude AI** |
+| **POST** | **`/api/va/ai/analyze-text`** | **Analyze text with Claude AI** |
+| **GET** | **`/api/va/ai/status`** | **Check Claude AI service status** |
 
 ### Content Kits
 | Method | Endpoint | Description |
@@ -150,6 +155,21 @@ npm run lint
 # Seed database with test data
 npm run seed
 ```
+
+### 🤖 Claude AI Integration
+
+The platform integrates Claude AI for intelligent content generation. See **[CLAUDE_AI_GUIDE.md](./CLAUDE_AI_GUIDE.md)** for complete documentation.
+
+**Quick Start:**
+1. Get API key from [Anthropic Console](https://console.anthropic.com/)
+2. Add to `.env`: `ANTHROPIC_API_KEY=sk-ant-api-xxx`
+3. Restart server and test: `GET /api/va/ai/status`
+
+**Available Features:**
+- 🤖 DM Script Generation
+- 📱 Social Media Content Ideas
+- 📋 Task Description Generation
+- 📊 Text Sentiment Analysis
 
 ---
 

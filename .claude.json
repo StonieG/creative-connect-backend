@@ -112,7 +112,12 @@
         "GET /tasks - List all tasks",
         "PATCH /tasks/:id - Update task status",
         "POST /generate-daily - Generate daily tasks",
-        "GET /dm-scripts - Get DM templates"
+        "GET /dm-scripts - Get DM templates",
+        "POST /ai/generate-dm-scripts - Generate DM scripts with Claude AI",
+        "POST /ai/generate-social-content - Generate social content with Claude AI",
+        "POST /ai/generate-task-description - Generate task descriptions with Claude AI",
+        "POST /ai/analyze-text - Analyze text with Claude AI",
+        "GET /ai/status - Check Claude AI service status"
       ]
     },
     "contentKits": {
@@ -229,7 +234,8 @@
       "ALLOWED_ORIGINS"
     ],
     "optional": [
-      "OPENAI_API_KEY"
+      "ANTHROPIC_API_KEY",
+      "CLAUDE_MODEL"
     ]
   },
   
